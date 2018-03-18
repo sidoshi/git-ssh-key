@@ -1,0 +1,41 @@
+{
+  "name": "git-ssh-key",
+  "description": "Setup ssh private keys for git from environment variables",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "files": ["dist/"],
+  "scripts": {
+    "build": "cosmo build",
+    "test": "cosmo test",
+    "start": "cosmo start",
+    "format": "cosmo format",
+    "lint": "cosmo lint",
+    "release": "cosmo release",
+    "flow": "flow",
+    "flowtyped": "flow-typed",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": ["cosmo format -f", "cosmo lint -f", "git add"]
+  },
+  "eslintConfig": {
+    "extends": "cosmo"
+  },
+  "author": {
+    "name": "Siddharth Doshi",
+    "email": "sidoshi510@gmail.com",
+    "url": "https://sid.sh"
+  },
+  "repository": "https://github.com/doshisid/git-ssh-key",
+  "dependencies": {
+    "@babel/runtime": "^7.0.0-beta.42"
+  },
+  "devDependencies": {
+    "cosmo-cli": "0.1.10",
+    "flow-bin": "^0.68.0",
+    "flow-typed": "^2.4.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.0.0"
+  }
+}

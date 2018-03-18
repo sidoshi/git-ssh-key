@@ -1,0 +1,16 @@
+{
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.insertSpaces": true,
+  "editor.rulers": [80],
+  "editor.tabSize": 2,
+  "files.eol": "\n",
+  "files.encoding": "utf8",
+  "prettier.trailingComma": "es5",
+  "prettier.semi": false,
+  "prettier.singleQuote": true,
+  "javascript.validate.enable": false,
+  "flow.useNPMPackagedFlow": true,
+  "flow.runOnAllFiles": true,
+  "eslint.run": "onSave"
+}
