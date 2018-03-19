@@ -1,6 +1,5 @@
 import path from 'path'
 import fs from 'fs-extra'
-import chalk from 'chalk'
 
 import { base64Decode, cleanup } from './utils'
 import paths from './paths'
@@ -79,7 +78,7 @@ export default (env: KeysEnv) => {
   }
 
   console.log(
-    chalk.red(`
+    `
 You must set private keys in appropriate environment variables, either manually 
 or in a '.env' file encoded using base64 algorithm.
 
@@ -88,7 +87,7 @@ git-ssh-key reads from the folowing environment variables :-
 GIT_SSH_KEY_GITHUB
 GIT_SSH_KEY_BITBUCKET
 GIT_SSH_KEY_GITLAB
-  `)
+`
   )
 
   process.exit(1)

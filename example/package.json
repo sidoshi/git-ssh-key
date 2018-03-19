@@ -1,0 +1,13 @@
+{
+  "name": "test-private",
+  "version": "1.0.0",
+  "author": "Siddharth Doshi <sidoshi510@gmail.com> (https://sid.sh/)",
+  "license": "MIT",
+  "scripts": {
+    "preinstall": "npm i git-ssh-key && git-ssh-key setup",
+    "postinstall": "git-ssh-key teardown"
+  },
+  "dependencies": {
+    "private-package": "git+ssh://git@gitlab.com/sidoshi/private-package.git"
+  }
+}
