@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
 cd example
-yarn
+npm i
 node index.js
