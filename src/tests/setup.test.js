@@ -3,11 +3,10 @@ import fs from 'fs-extra'
 
 import setup, {
   filterKeys,
-  setupSshConfigFile,
+  setupSshConfig,
   buildConfig,
   createKeyFile,
   appendConfigFile,
-  setupSshCommand,
 } from '../setup'
 import { cleanup } from '../utils'
 import paths from '../paths'
@@ -72,7 +71,7 @@ test('Appends config file properly', () => {
 test('Setups config file properly when platform keys are provided', () => {
   const env = {}
   expect(env.GIT_SSH_COMMAND).not.toBeDefined()
-  setupSshConfigFile(
+  setupSshConfig(
     {
       github: 'githubKey',
       gitlab: 'gitlabKey',
@@ -98,25 +97,13 @@ test('Setups config file properly when platform keys are provided', () => {
   expect(env.GIT_SSH_COMMAND).toBeDefined()
 })
 
-test('Setups command properly when general key is provided', () => {
-  const env = {}
-  expect(env.GIT_SSH_COMMAND).not.toBeDefined()
-  setupSshCommand('generalKey', env)
-  expect(fs.existsSync(path.resolve(paths.configDir, 'config'))).not.toBe(true)
-  expect(fs.existsSync(path.resolve(paths.keysDir, 'general_key'))).toBe(true)
-  expect(env.GIT_SSH_COMMAND).toBeDefined()
-})
-
 test('Shows error message if no keys are found', () => {
   setup({})
   expect(console.log.mock.calls[0][0]).toMatchSnapshot()
   expect(process.exit).toBeCalledWith(1)
 })
 
-test('Works if either platform or general keys are provided', () => {
-  setup({ GIT_SSH_KEY: 'general' })
-  expect(process.exit).not.toBeCalledWith(1)
-  process.exit = jest.fn()
+test('Works if platform key is provided', () => {
   setup({ GIT_SSH_KEY_GITHUB: 'github' })
   expect(process.exit).not.toBeCalledWith(1)
 })

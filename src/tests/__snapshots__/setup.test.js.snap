@@ -7,7 +7,6 @@ exports[`Shows error message if no keys are found 1`] = `
 [31m[39m
 [31mgit-ssh-key reads from the folowing environment variables :-[39m
 [31m[39m
-[31mGIT_SSH_KEY[39m
 [31mGIT_SSH_KEY_GITHUB[39m
 [31mGIT_SSH_KEY_BITBUCKET[39m
 [31mGIT_SSH_KEY_GITLAB[39m

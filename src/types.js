@@ -5,7 +5,7 @@ export type KeysEnv = {
   GIT_SSH_KEY?: ?string,
 }
 
-export type Key = string
+type Key = string
 
 export type PlatformKeys = {
   github: ?Key,
