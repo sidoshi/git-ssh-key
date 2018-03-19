@@ -22,13 +22,13 @@ test('cleanup', () => {
     ? fs.readFileSync(paths.configFile).toString()
     : null
 
-  fs.appendFileSync(paths.configFile, 'Some existing config')
+  !originalConfig && fs.appendFileSync(paths.configFile, 'Some existing config')
   appendConfigFile('github')
   appendConfigFile('gitlab')
   cleanup()
 
   expect(fs.readFileSync(paths.configFile).toString()).toBe(
-    'Some existing config'
+    originalConfig || 'Some existing config'
   )
   fs.removeSync(paths.configFile)
 

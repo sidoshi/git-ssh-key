@@ -25,8 +25,8 @@ export const filterKeys = (keys: PlatformKeys) =>
 export const getKeyPath = (platform: string) =>
   path.resolve(paths.keysDir, `${platform}_key`)
 
-export const buildConfig = (platform: string) =>
-  `${delimeter}
+export const buildConfig = (platform: string) => `
+  ${delimeter}
 Host ${mapPlatformToUrl[platform]}
   IdentitiesOnly yes
   UserKnownHostsFile=/dev/null

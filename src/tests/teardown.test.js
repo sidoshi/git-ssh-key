@@ -1,5 +1,3 @@
-import fs from 'fs-extra'
-
 import teardown from '../teardown'
 
 test('Teardown', () => {
