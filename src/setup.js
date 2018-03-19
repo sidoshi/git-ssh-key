@@ -13,6 +13,8 @@ const mapPlatformToUrl = {
   bitbucket: 'bitbucket.org',
 }
 
+export const delimeter = '### git-ssh-key-config ###'
+
 export const filterKeys = (keys: PlatformKeys) =>
   Object.keys(keys).reduce((validKeys, platform) => {
     if (!keys[platform]) return validKeys
@@ -21,29 +23,30 @@ export const filterKeys = (keys: PlatformKeys) =>
     return validKeys
   }, {})
 
+export const getKeyPath = (platform: string) =>
+  path.resolve(paths.keysDir, `${platform}_key`)
+
 export const buildConfig = (platform: string) =>
-  `Host ${mapPlatformToUrl[platform]}
+  `${delimeter}
+Host ${mapPlatformToUrl[platform]}
   IdentitiesOnly yes
   UserKnownHostsFile=/dev/null
   StrictHostKeyChecking no
-  IdentityFile ${path.resolve(paths.keysDir, `${platform}_key`)}
+  IdentityFile ${getKeyPath(platform)}
+${delimeter}
 `
 
 export const createKeyFile = (platform: string, key: string) => {
   fs.ensureDirSync(paths.keysDir)
-  const keyPath = path.resolve(paths.keysDir, `${platform}_key`)
+  const keyPath = getKeyPath(platform)
   fs.writeFileSync(keyPath, key)
+  fs.chmodSync(keyPath, '600')
 }
 
-export const appendConfigFile = (platform: string) => {
-  fs.ensureDirSync(paths.configDir)
-  fs.appendFileSync(
-    path.resolve(paths.configDir, 'config'),
-    buildConfig(platform)
-  )
-}
+export const appendConfigFile = (platform: string) =>
+  fs.appendFileSync(paths.configFile, buildConfig(platform))
 
-export const setupSshConfig = (keys: PlatformKeys, env: Object) => {
+export const setupSshConfig = (keys: PlatformKeys) => {
   const validKeys = filterKeys(keys)
 
   Object.keys(validKeys).forEach(platform => {
@@ -51,8 +54,6 @@ export const setupSshConfig = (keys: PlatformKeys, env: Object) => {
     createKeyFile(platform, key)
     appendConfigFile(platform)
   })
-
-  env.GIT_SSH_COMMAND = `ssh -F ${path.resolve(paths.configDir, 'config')} $*`
 }
 
 export default (env: KeysEnv) => {
@@ -73,7 +74,7 @@ export default (env: KeysEnv) => {
       bitbucket: base64Decode(bitbucketKey),
     }
 
-    setupSshConfig(keys, env)
+    setupSshConfig(keys)
     return
   }
 

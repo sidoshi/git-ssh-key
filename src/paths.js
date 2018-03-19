@@ -1,7 +1,10 @@
 import path from 'path'
+import os from 'os'
+
+const homedir = os.homedir()
 
 export default {
-  tmp: path.resolve('tmp'),
-  keysDir: path.resolve('tmp/keys'),
-  configDir: path.resolve('tmp/config'),
+  homedir,
+  keysDir: path.resolve(homedir, '.ssh', 'git_ssh_keys'),
+  configFile: path.resolve(homedir, '.ssh', 'config'),
 }

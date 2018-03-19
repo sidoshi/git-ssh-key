@@ -1,6 +1,7 @@
 import fs from 'fs-extra'
 
 import { base64Decode, cleanup } from '../utils'
+import { appendConfigFile } from '../setup'
 import paths from '../paths'
 
 test('base64Decode', () => {
@@ -16,4 +17,28 @@ test('cleanup', () => {
   expect(fs.existsSync(paths.keysDir)).toBe(true)
   cleanup()
   expect(fs.existsSync(paths.keysDir)).toBe(false)
+
+  const originalConfig = fs.existsSync(paths.configFile)
+    ? fs.readFileSync(paths.configFile).toString()
+    : null
+
+  fs.appendFileSync(paths.configFile, 'Some existing config')
+  appendConfigFile('github')
+  appendConfigFile('gitlab')
+  cleanup()
+
+  expect(fs.readFileSync(paths.configFile).toString()).toBe(
+    'Some existing config'
+  )
+  fs.removeSync(paths.configFile)
+
+  appendConfigFile('github')
+  appendConfigFile('gitlab')
+  cleanup()
+
+  expect(fs.existsSync(paths.configFile)).toBe(false)
+
+  originalConfig
+    ? fs.writeFileSync(paths.configFile, originalConfig)
+    : fs.removeSync(paths.configFile)
 })

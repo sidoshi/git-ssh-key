@@ -5,6 +5,7 @@ import setup, {
   filterKeys,
   setupSshConfig,
   buildConfig,
+  getKeyPath,
   createKeyFile,
   appendConfigFile,
 } from '../setup'
@@ -39,9 +40,14 @@ test('Filters keys properly', () => {
   ).toEqual({ github: 'github', gitlab: 'something' })
 })
 
+test('getKeyPath', () => {
+  expect(getKeyPath('github')).toMatch('.ssh/git_ssh_keys/github_key')
+})
+
 test('BuildConfig', () => {
   expect(buildConfig('github')).toMatch('github.com')
   expect(buildConfig('github')).toMatch('github_key')
+  expect(buildConfig('github')).toMatch('### git-ssh-key-config ###')
   expect(buildConfig('gitlab')).toMatch('gitlab.com')
   expect(buildConfig('gitlab')).toMatch('gitlab_key')
   expect(buildConfig('bitbucket')).toMatch('bitbucket.org')
@@ -54,11 +60,11 @@ test('creates key file properly', () => {
   createKeyFile('github', 'githubKey')
   expect(fs.existsSync(keyPath)).toBe(true)
   expect(fs.readFileSync(keyPath).toString()).toBe('githubKey')
+  expect(fs.statSync(keyPath).mode).toBe(33152)
 })
 
 test('Appends config file properly', () => {
-  const configPath = path.resolve(paths.configDir, 'config')
-  expect(fs.existsSync(configPath)).toBe(false)
+  const configPath = paths.configFile
   appendConfigFile('github')
   expect(fs.existsSync(configPath)).toBe(true)
   expect(fs.readFileSync(configPath).toString()).toMatch('github.com')
@@ -70,7 +76,6 @@ test('Appends config file properly', () => {
 
 test('Setups config file properly when platform keys are provided', () => {
   const env = {}
-  expect(env.GIT_SSH_COMMAND).not.toBeDefined()
   setupSshConfig(
     {
       github: 'githubKey',
@@ -84,17 +89,14 @@ test('Setups config file properly when platform keys are provided', () => {
   expect(fs.existsSync(path.resolve(paths.keysDir, 'bitbucket_key'))).toBe(
     false
   )
-  expect(fs.existsSync(path.resolve(paths.configDir, 'config'))).toBe(true)
-  const config = fs
-    .readFileSync(path.resolve(paths.configDir, 'config'))
-    .toString()
+  expect(fs.existsSync(paths.configFile)).toBe(true)
+  const config = fs.readFileSync(path.resolve(paths.configFile)).toString()
   expect(config).toMatch('gitlab_key')
   expect(config).toMatch('github_key')
   expect(config).toMatch('gitlab.com')
   expect(config).toMatch('github.com')
   expect(config).not.toMatch('bitbucket_key')
   expect(config).not.toMatch('bitbucket.org')
-  expect(env.GIT_SSH_COMMAND).toBeDefined()
 })
 
 test('Shows error message if no keys are found', () => {
