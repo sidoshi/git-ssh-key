@@ -2,7 +2,7 @@ import path from 'path'
 import fs from 'fs-extra'
 import chalk from 'chalk'
 
-import { base64Decode } from './utils'
+import { base64Decode, cleanup } from './utils'
 import paths from './paths'
 
 import type { PlatformKeys, KeysEnv, Key } from './types'
@@ -12,8 +12,6 @@ const mapPlatformToUrl = {
   gitlab: 'gitlab.com',
   bitbucket: 'bitbucket.org',
 }
-
-export const cleanup = () => fs.removeSync(paths.tmp)
 
 export const filterKeys = (keys: PlatformKeys) =>
   Object.keys(keys).reduce((validKeys, platform) => {

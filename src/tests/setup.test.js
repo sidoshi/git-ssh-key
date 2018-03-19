@@ -4,12 +4,12 @@ import fs from 'fs-extra'
 import setup, {
   filterKeys,
   setupSshConfigFile,
-  cleanup,
   buildConfig,
   createKeyFile,
   appendConfigFile,
   setupSshCommand,
 } from '../setup'
+import { cleanup } from '../utils'
 import paths from '../paths'
 
 const _exit = process.exit
@@ -25,13 +25,6 @@ afterAll(() => {
   process.exit = _exit
   console.log = _log
   cleanup()
-})
-
-test('cleanup', () => {
-  fs.ensureDirSync(paths.keysDir)
-  expect(fs.existsSync(paths.keysDir)).toBe(true)
-  cleanup()
-  expect(fs.existsSync(paths.keysDir)).toBe(false)
 })
 
 test('Filters keys properly', () => {
