@@ -5,6 +5,9 @@
   "main": "dist/index.js",
   "license": "MIT",
   "files": ["dist/"],
+  "bin": {
+    "git-ssh-key": "./dist/index.js"
+  },
   "scripts": {
     "build": "cosmo build",
     "test": "cosmo test",
@@ -29,7 +32,9 @@
   },
   "repository": "https://github.com/doshisid/git-ssh-key",
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.42"
+    "@babel/runtime": "^7.0.0-beta.42",
+    "chalk": "^2.3.2",
+    "dotenv": "^5.0.1"
   },
   "devDependencies": {
     "cosmo-cli": "0.1.10",
