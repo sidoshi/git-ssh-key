@@ -1,10 +1,12 @@
 {
   "name": "git-ssh-key",
   "description": "Setup ssh private keys for git from environment variables",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "dist/index.js",
   "license": "MIT",
-  "files": ["dist/"],
+  "files": [
+    "dist/"
+  ],
   "bin": {
     "git-ssh-key": "./dist/index.js"
   },
@@ -20,7 +22,11 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": ["cosmo format -f", "cosmo lint -f", "git add"]
+    "*.js": [
+      "cosmo format -f",
+      "cosmo lint -f",
+      "git add"
+    ]
   },
   "eslintConfig": {
     "extends": "cosmo"
