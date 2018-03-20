@@ -10,6 +10,7 @@ rm -rf package-lock.json
 yarn cache clean
 
 echo "Testing yarn"
+yarn -v
 yarn
 node index.js || exit 1
 cd ..
