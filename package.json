@@ -1,7 +1,7 @@
 {
   "name": "git-ssh-key",
   "description": "Setup ssh private keys for git from environment variables",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "main": "dist/index.js",
   "license": "MIT",
   "files": [
