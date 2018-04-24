@@ -3,10 +3,8 @@ import paths from './paths'
 
 export const delimeter = '### git-ssh-key-config ###'
 
-export const base64Decode = (encoded: ?string) =>
-  typeof encoded === 'string'
-    ? Buffer.from(encoded, 'base64').toString('utf8')
-    : null
+export const base64Decode = (encoded: string) =>
+  Buffer.from(encoded, 'base64').toString('utf8')
 
 export const cleanupConfig = (config: string) => {
   const start = config.indexOf(delimeter)
