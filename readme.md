@@ -11,13 +11,38 @@ It has two prerequisites:-
 * You have a ssh key-pair and have added the public key to your git service.
 * you have your private key encoded in base64 format and set in appropriate environment variable.
 
-`git-ssh-key` reads from following environment variables based on the git services it supports.
+`git-ssh-key` needs two things to function properly. The private key and the
+url of the git host. You can provide any number of private key and host url
+pairs by setting the proper environment variables. `git-ssh-key` looks for a
+pattern in env variables to get pairs of private keys and hosts.
 
+The pattern for private keys is:
+`GIT_SSH_KEY_XXXXX`
+
+Example:-
 `GIT_SSH_KEY_GITHUB`
 `GIT_SSH_KEY_GITLAB`
 `GIT_SSH_KEY_BUTBUCKET`
+`GIT_SSH_KEY_COMPANY_GITLAB`
 
-You can then run
+This variables need to be set with appropriate private keys encoded in base64.
+
+The pattern for host urls is:-
+`GIT_SSH_HOST_XXX`
+
+Example:-
+`GIT_SSH_HOST_GITHUB='github.com'`
+`GIT_SSH_HOST_GITLAB='gitlab.com'`
+`GIT_SSH_HOST_BUTBUCKET='bitbucket.org'`
+`GIT_SSH_HOST_SELF_GITLAB=gitlab.self.com`
+
+For every host, there must be a corresponding private key and vice versa with
+an exception to few popular hosts.
+
+You don't need to provide host urls for Github, Gitlab or Bitbucket. They are
+set by default to `github.com`, 'gitlab.com' and 'bitbucket.org' respectively.
+Though if you do provide host urls for these services, provided urls will
+override the default urls.
 
 ```bash
 git-ssh-env setup

@@ -1,7 +1,7 @@
 import fs from 'fs-extra'
 
 import { base64Decode, cleanup } from '../utils'
-import { appendConfigFile } from '../setup'
+import { appendConfigFile } from '../setup/setup'
 import paths from '../paths'
 
 test('base64Decode', () => {

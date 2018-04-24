@@ -1,7 +1,7 @@
 import fs from 'fs-extra'
 import paths from './paths'
 
-import { delimeter } from './setup'
+export const delimeter = '### git-ssh-key-config ###'
 
 export const base64Decode = (encoded: ?string) =>
   typeof encoded === 'string'
