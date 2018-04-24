@@ -4,10 +4,13 @@
   "author": "Siddharth Doshi <sidoshi510@gmail.com> (https://sid.sh/)",
   "license": "MIT",
   "scripts": {
-    "preinstall": "npm i git-ssh-key && git-ssh-key setup",
+    "preinstall": "npm install --save-dev git-ssh-key.tgz && git-ssh-key setup",
     "postinstall": "git-ssh-key teardown"
   },
   "dependencies": {
     "private-package": "git+ssh://git@gitlab.com/sidoshi/private-package.git"
+  },
+  "devDependencies": {
+    "git-ssh-key": "file:git-ssh-key.tgz"
   }
 }
